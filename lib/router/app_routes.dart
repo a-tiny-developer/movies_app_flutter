@@ -5,11 +5,16 @@ import '../screens/screens.dart';
 
 class AppRoutes {
   static const initialRoute = 'home';
+  static const detailsRoute = 'details';
 
   static const screensOptions = <ScreenRoute>[
     ScreenRoute(
       route: initialRoute,
       screen: HomeScreen(),
+    ),
+    ScreenRoute(
+      route: detailsRoute,
+      screen: DetailsScreen(),
     ),
   ];
 
