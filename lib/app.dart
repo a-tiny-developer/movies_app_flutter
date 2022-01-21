@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'screens/screens.dart';
+import 'router/router.dart';
+import 'theme/theme.dart';
 
 class MoviesApp extends StatelessWidget {
   const MoviesApp({Key? key}) : super(key: key);
@@ -9,15 +10,10 @@ class MoviesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Movies App',
-      initialRoute: 'home',
-      routes: {
-        'home': (context) => const HomeScreen(),
-        'details': (context) => const DetailsScreen(),
-      },
-      theme: ThemeData.light().copyWith(
-        appBarTheme: const AppBarTheme(color: Colors.indigo),
-      ),
+      initialRoute: AppRoutes.initialRoute,
+      routes: AppRoutes.getAppRoutes,
+      theme: AppTheme.lighTheme,
+      darkTheme: AppTheme.darkTheme,
     );
   }
 }
