@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../router/router.dart';
+
 class MovieSlider extends StatelessWidget {
   const MovieSlider({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      height: 250,
-      color: Colors.red,
+      height: 260,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -19,6 +20,7 @@ class MovieSlider extends StatelessWidget {
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
+          const SizedBox(height: 5),
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -44,8 +46,37 @@ class _MoviePoster extends StatelessWidget {
     return Container(
       width: 130,
       height: 190,
-      color: Colors.green,
-      margin: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                AppRoutes.detailsRoute,
+                arguments: 'movie-instance',
+              );
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: const FadeInImage(
+                placeholder: AssetImage('assets/images/no-image.jpg'),
+                image: NetworkImage('https://via.placeholder.com/300x400'),
+                width: 130,
+                height: 190,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(height: 5),
+          const Text(
+            'Title description,description,description,',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          )
+        ],
+      ),
     );
   }
 }

@@ -1,6 +1,9 @@
-import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app_flutter/router/app_routes.dart';
+
+import 'package:card_swiper/card_swiper.dart';
+
+import '../router/app_routes.dart';
+
 
 class CardSwiper extends StatelessWidget {
   const CardSwiper({Key? key}) : super(key: key);
