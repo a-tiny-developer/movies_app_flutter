@@ -15,6 +15,9 @@ class MoviesApp extends StatelessWidget {
         'home': (context) => const HomeScreen(),
         'details': (context) => const DetailsScreen(),
       },
+      theme: ThemeData.light().copyWith(
+        appBarTheme: const AppBarTheme(color: Colors.indigo),
+      ),
     );
   }
 }
