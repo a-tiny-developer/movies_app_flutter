@@ -7,7 +7,9 @@ class CardSwiper extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height / 2 - 30,
+      height: (MediaQuery.of(context).size.height -
+              (MediaQuery.of(context).padding.top + kToolbarHeight)) /
+          2,
       color: Colors.red,
     );
   }
