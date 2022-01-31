@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:movies_app_flutter/models/models.dart';
 
 class MoviesProvider extends ChangeNotifier {
   static const _apiKey = 'ec43a22728c6531c11a5f81fb6806031';
@@ -19,7 +18,6 @@ class MoviesProvider extends ChangeNotifier {
       'page': '1',
     });
     final response = await http.get(url);
-    final Map<String, dynamic> decodedData = json.decode(response.body);
-    print(decodedData['dates']);
+    final nowPlayingResponse = NowPlayingResponse.fromJson(response.body);
   }
 }
