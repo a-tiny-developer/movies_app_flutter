@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const Color primary = Colors.deepPurple;
+  static const Color primary = Colors.indigo;
 
   static final ThemeData lighTheme = ThemeData.light().copyWith(
     primaryColor: primary,
