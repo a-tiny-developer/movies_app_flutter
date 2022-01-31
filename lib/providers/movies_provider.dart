@@ -1,7 +1,25 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class MoviesProvider extends ChangeNotifier {
-  MoviesProvider();
+  static const _apiKey = 'ec43a22728c6531c11a5f81fb6806031';
+  static const _baseURl = 'api.themoviedb.org';
+  static const _language = 'en-US';
 
-  Future<void> getOnDisplayMovies() async {}
+  MoviesProvider() {
+    getOnDisplayMovies();
+  }
+
+  Future<void> getOnDisplayMovies() async {
+    final url = Uri.https(_baseURl, '3/movie/now_playing', {
+      'api_key': _apiKey,
+      'language': _language,
+      'page': '1',
+    });
+    final response = await http.get(url);
+    final Map<String, dynamic> decodedData = json.decode(response.body);
+    print(decodedData['dates']);
+  }
 }

@@ -13,7 +13,10 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => MoviesProvider())
+        ChangeNotifierProvider(
+          create: (context) => MoviesProvider(),
+          lazy: false,
+        )
       ],
       child: const MoviesApp(),
     );
