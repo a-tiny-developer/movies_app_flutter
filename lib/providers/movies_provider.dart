@@ -7,6 +7,8 @@ class MoviesProvider extends ChangeNotifier {
   static const _baseURl = 'api.themoviedb.org';
   static const _language = 'en-US';
 
+  List<Movie> onDisplayMovies = [];
+
   MoviesProvider() {
     getOnDisplayMovies();
   }
@@ -19,5 +21,7 @@ class MoviesProvider extends ChangeNotifier {
     });
     final response = await http.get(url);
     final nowPlayingResponse = NowPlayingResponse.fromJson(response.body);
+    onDisplayMovies = nowPlayingResponse.results;
+    notifyListeners();
   }
 }
