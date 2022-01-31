@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:movies_app_flutter/models/models.dart';
 
@@ -12,21 +14,22 @@ class DetailsScreen extends StatelessWidget {
 
     return Scaffold(
       body: CustomScrollView(
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
         slivers: [
           _CustomAppBar(
-            title: movie.title,
-            urlImage: movie.fullPosterImg,
+            movie: movie,
           ),
           SliverList(
             delegate: SliverChildListDelegate(
               [
                 _PosterAndTitle(movie: movie),
-                _Overview(
-                  text: movie.overview,
-                ),
-                CastingCards(
-                  movie: movie,
-                )
+                _Overview(text: movie.overview),
+                // _Overview(text: movie.overview),
+                // _Overview(text: movie.overview),
+                // _Overview(text: movie.overview),
+                CastingCards(movie: movie),
               ],
             ),
           ),
@@ -40,12 +43,10 @@ class DetailsScreen extends StatelessWidget {
 class _CustomAppBar extends StatelessWidget {
   const _CustomAppBar({
     Key? key,
-    required this.title,
-    required this.urlImage,
+    required this.movie,
   }) : super(key: key);
 
-  final String title;
-  final String urlImage;
+  final Movie movie;
 
   @override
   Widget build(BuildContext context) {
@@ -60,16 +61,19 @@ class _CustomAppBar extends StatelessWidget {
         title: Container(
           width: double.infinity,
           alignment: Alignment.bottomCenter,
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           color: Colors.black12,
           child: Text(
-            title,
-            style: Theme.of(context).textTheme.bodyText1,
+            movie.title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: Colors.white, fontSize: 16),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
         ),
         background: FadeInImage(
           placeholder: const AssetImage('assets/images/loading.gif'),
-          image: NetworkImage(urlImage),
+          image: NetworkImage(movie.fullBackdropPath),
           fit: BoxFit.cover,
         ),
       ),
@@ -100,35 +104,37 @@ class _PosterAndTitle extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                movie.title,
-                style: textTheme.headline5,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-              Text(
-                movie.originalTitle,
-                style: textTheme.subtitle1,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.star_outline,
-                    color: Colors.grey,
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    movie.voteAverage.toString(),
-                    style: textTheme.caption,
-                  )
-                ],
-              )
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  movie.title,
+                  style: textTheme.headline5,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                Text(
+                  movie.originalTitle,
+                  style: textTheme.subtitle1,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.star_outline,
+                      color: Colors.grey,
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      movie.voteAverage.toString(),
+                      style: textTheme.caption,
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ],
       ),

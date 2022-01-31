@@ -21,5 +21,5 @@ class AppTheme {
     // textTheme: darkTextTheme,
   );
 
-  // static const TextTheme darkTextTheme = TextTheme();
+  static const TextTheme darkTextTheme = TextTheme();
 }
