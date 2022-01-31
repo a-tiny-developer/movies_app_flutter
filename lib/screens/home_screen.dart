@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final moviesProvider = Provider.of<MoviesProvider>(context);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Movies in cinema'),
@@ -28,7 +28,10 @@ class HomeScreen extends StatelessWidget {
             CardSwiper(
               movies: moviesProvider.onDisplayMovies,
             ),
-            const MovieSlider(),
+            MovieSlider(
+              title: 'Populares!',
+              movies: moviesProvider.popularMovies,
+            ),
           ],
         ),
       ),

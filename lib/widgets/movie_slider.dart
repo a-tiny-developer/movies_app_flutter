@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 
+import 'package:movies_app_flutter/models/models.dart';
+
 import '../router/router.dart';
 
 class MovieSlider extends StatelessWidget {
-  const MovieSlider({Key? key}) : super(key: key);
+  const MovieSlider({
+    Key? key,
+    required this.movies,
+    this.title,
+  }) : super(key: key);
+
+  final List<Movie> movies;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -13,20 +22,23 @@ class MovieSlider extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              'Popular',
-              style: Theme.of(context).textTheme.headline6,
+          if (title != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                title!,
+                style: Theme.of(context).textTheme.headline6,
+              ),
             ),
-          ),
           const SizedBox(height: 5),
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 20,
+              itemCount: movies.length,
               itemBuilder: (context, index) {
-                return const _MoviePoster();
+                return _MoviePoster(
+                  movie: movies[index],
+                );
               },
             ),
           ),
@@ -39,7 +51,10 @@ class MovieSlider extends StatelessWidget {
 class _MoviePoster extends StatelessWidget {
   const _MoviePoster({
     Key? key,
+    required this.movie,
   }) : super(key: key);
+
+  final Movie movie;
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +69,14 @@ class _MoviePoster extends StatelessWidget {
               Navigator.pushNamed(
                 context,
                 AppRoutes.detailsRoute,
-                arguments: 'movie-instance',
+                arguments: movie,
               );
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: const FadeInImage(
-                placeholder: AssetImage('assets/images/no-image.jpg'),
-                image: NetworkImage('https://via.placeholder.com/300x400'),
+              child: FadeInImage(
+                placeholder: const AssetImage('assets/images/no-image.jpg'),
+                image: NetworkImage(movie.fullPosterImg),
                 width: 130,
                 height: 190,
                 fit: BoxFit.cover,
@@ -69,8 +84,8 @@ class _MoviePoster extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 5),
-          const Text(
-            'Title description,description,description,',
+          Text(
+            movie.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
