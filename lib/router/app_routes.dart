@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../models/models.dart';
 import '../screens/screens.dart';
 
 class AppRoutes {
   static const initialRoute = 'home';
   static const detailsRoute = 'details';
 
-  static const screensOptions = <ScreenRoute>[
-    ScreenRoute(
+  static const screensOptions = <_ScreenRoute>[
+    _ScreenRoute(
       route: initialRoute,
       screen: HomeScreen(),
     ),
-    ScreenRoute(
+    _ScreenRoute(
       route: detailsRoute,
       screen: DetailsScreen(),
     ),
@@ -27,4 +26,15 @@ class AppRoutes {
     }
     return appRoutes;
   }
+}
+
+
+class _ScreenRoute {
+  final String route;
+  final Widget screen;
+
+  const _ScreenRoute({
+    required this.route,
+    required this.screen,
+  });
 }
