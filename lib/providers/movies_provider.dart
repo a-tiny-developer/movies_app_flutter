@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:movies_app_flutter/models/models.dart';
+import 'package:movies_app_flutter/models/search_response.dart';
 
 class MoviesProvider extends ChangeNotifier {
   static const _apiKey = 'ec43a22728c6531c11a5f81fb6806031';
@@ -28,16 +29,16 @@ class MoviesProvider extends ChangeNotifier {
   }
 
   Future<void> getOnDisplayMovies() async {
-    final jsonData = await _getJsonData('3/movie/now_playing');
-    final nowPlayingResponse = NowPlayingResponse.fromJson(jsonData);
+    final nowPlayingResponse =
+        NowPlayingResponse.fromJson(await _getJsonData('3/movie/now_playing'));
     onDisplayMovies = nowPlayingResponse.results;
     notifyListeners();
   }
 
   Future<void> getPopularMovies() async {
     _popularPage++;
-    final jsonData = await _getJsonData('3/movie/popular', _popularPage);
-    final popularResponse = PopularResponse.fromJson(jsonData);
+    final popularResponse = PopularResponse.fromJson(
+        await _getJsonData('3/movie/popular', _popularPage));
     popularMovies = [...popularMovies, ...popularResponse.results];
     notifyListeners();
   }
@@ -46,9 +47,15 @@ class MoviesProvider extends ChangeNotifier {
     if (moviesCast.containsKey(movieId)) {
       return moviesCast[movieId]!;
     }
-    final jsonData = await _getJsonData('3/movie/$movieId/credits');
-    final creditsResponse = CreditsResponse.fromJson(jsonData);
+    final creditsResponse = CreditsResponse.fromJson(
+        await _getJsonData('3/movie/$movieId/credits'));
     moviesCast[movieId] = creditsResponse.cast;
     return creditsResponse.cast;
+  }
+
+  Future<List<Movie>> searchMovie(String query) async {
+    final searchResponse =
+        SearchResponse.fromJson(await _getJsonData('search/movie?$query'));
+    return searchResponse.results;
   }
 }
