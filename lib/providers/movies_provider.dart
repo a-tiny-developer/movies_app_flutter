@@ -7,13 +7,24 @@ class MoviesProvider extends ChangeNotifier {
   static const _baseURl = 'api.themoviedb.org';
   static const _language = 'en-US';
 
-  List<Movie> onDisplayMovies = [];
-  List<Movie> popularMovies = [];
-  int _popularPage = 0;
+  var onDisplayMovies = <Movie>[];
+  var popularMovies = <Movie>[];
+  var _popularPage = 0;
+  var moviesCast = <int, List<Cast>>{};
 
   MoviesProvider() {
     getOnDisplayMovies();
     getPopularMovies();
+  }
+
+  Future<String> _getJsonData(String unencodedPath, [int page = 1]) async {
+    final url = Uri.https(_baseURl, unencodedPath, {
+      'api_key': _apiKey,
+      'language': _language,
+      'page': page.toString(),
+    });
+    final response = await http.get(url);
+    return response.body;
   }
 
   Future<void> getOnDisplayMovies() async {
@@ -31,20 +42,13 @@ class MoviesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<void> getCredits() async {
-  //   final jsonData = await _getJsonData('3/movie/$movieId/credits');
-  //   final popularResponse = PopularResponse.fromJson(jsonData);
-  //   popularMovies = [...popularMovies, ...popularResponse.results];
-  //   notifyListeners();
-  // }
-
-  Future<String> _getJsonData(String unencodedPath, [int page = 1]) async {
-    final url = Uri.https(_baseURl, unencodedPath, {
-      'api_key': _apiKey,
-      'language': _language,
-      'page': page.toString(),
-    });
-    final response = await http.get(url);
-    return response.body;
+  Future<List<Cast>> getMovieCast(int movieId) async {
+    if (moviesCast[movieId] != null) {
+      return Future.value(moviesCast[movieId]);
+    }
+    final jsonData = await _getJsonData('3/movie/$movieId/credits');
+    final creditsResponse = CreditsResponse.fromJson(jsonData);
+    moviesCast[movieId] = creditsResponse.cast;
+    return creditsResponse.cast;
   }
 }
