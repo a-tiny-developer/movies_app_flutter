@@ -31,6 +31,13 @@ class MoviesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Future<void> getCredits() async {
+  //   final jsonData = await _getJsonData('3/movie/$movieId/credits');
+  //   final popularResponse = PopularResponse.fromJson(jsonData);
+  //   popularMovies = [...popularMovies, ...popularResponse.results];
+  //   notifyListeners();
+  // }
+
   Future<String> _getJsonData(String unencodedPath, [int page = 1]) async {
     final url = Uri.https(_baseURl, unencodedPath, {
       'api_key': _apiKey,

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:movies_app_flutter/models/models.dart';
 
@@ -26,10 +24,7 @@ class DetailsScreen extends StatelessWidget {
               [
                 _PosterAndTitle(movie: movie),
                 _Overview(text: movie.overview),
-                // _Overview(text: movie.overview),
-                // _Overview(text: movie.overview),
-                // _Overview(text: movie.overview),
-                CastingCards(movie: movie),
+                CastingCards(movieId: movie.id),
               ],
             ),
           ),
