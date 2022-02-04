@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
     final moviesProvider = Provider.of<MoviesProvider>(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Movies in cinema'),
         elevation: 0,
