@@ -7,7 +7,7 @@ import 'package:movies_app_flutter/models/models.dart';
 import 'package:movies_app_flutter/models/search_response.dart';
 
 class MoviesProvider extends ChangeNotifier {
-  static const _apiKey = 'ec43a22728c6531c11a5f81fb6806031';
+  static const _apiKey = 'API_KEY';
   static const _baseURl = 'api.themoviedb.org';
   static const _language = 'en-US';
 
